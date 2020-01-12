@@ -3,3 +3,6 @@
 
 Поиск в монге по слову:
 db.structs.find({types:{$elemMatch:{"word" : "ящикам"}}})
+
+Проиндексировал:
+db.structs.createIndex( { "types.word": 1 } )

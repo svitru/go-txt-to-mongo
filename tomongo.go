@@ -13,7 +13,6 @@ import (
     "go.mongodb.org/mongo-driver/mongo/options"
 )
 
-// You will be using this Trainer type later in the program
 type Words struct {
     Word string
     Sign string

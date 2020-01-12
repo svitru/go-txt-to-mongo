@@ -4,19 +4,24 @@ import (
     "context"
     "fmt"
     "log"
-    "bufio"
-    "os"
-    "strconv"
-    "strings"
+//    "bufio"
+//    "os"
+//    "strconv"
+//    "strings"
 
     "go.mongodb.org/mongo-driver/mongo"
     "go.mongodb.org/mongo-driver/mongo/options"
 )
 
-type Words struct {
+type Dicts struct {
     Word string
     Sign string
-    Group int
+}
+
+type Words struct {
+    Index int
+    Root string
+    Types []Dicts
 }
 
 func main() {
@@ -41,9 +46,15 @@ func main() {
 
     fmt.Println("Connected to MongoDB!")
 
-    collection := client.Database("test").Collection("words")
+    collection := client.Database("test").Collection("structs")
 
-    file, err := os.Open("data.txt")
+    b := Words{3, "boo", []Dicts{{"one", "two"}, {"three", "four"}}}
+    _ , err = collection.InsertOne(context.TODO(), b)
+      if err != nil {
+        log.Fatal(err)
+      }
+
+/*    file, err := os.Open("data.txt")
     if err != nil {
         log.Fatal(err)
     }
@@ -59,7 +70,7 @@ func main() {
         log.Fatal(err)
       }
     }
-
+*/
     err = client.Disconnect(context.TODO())
     if err != nil {
       log.Fatal(err)
